@@ -4,6 +4,8 @@
 # Print out 256 colours, with each number printed in its corresponding colour
 # See http://askubuntu.com/questions/821157/print-a-256-color-test-pattern-in-the-terminal/821163#821163
 
+# This file was originally taken from https://gist.githubusercontent.com/HaleTom/89ffe32783f89f403bba96bd7bcd1263/raw
+
 set -eu # Fail on errors or undeclared variables
 
 printable_colours=256
@@ -90,6 +92,7 @@ function print_blocks {
     done
 }
 
+printf "%s\n\n" "-- 256 colors: SGR 48;5;0..255 --"
 print_run 0 16 # The first 16 colours are spread over the whole spectrum
 printf "\n"
 print_blocks 16 231 6 6 3 # 6x6x6 colour cube between 16 and 231 inclusive

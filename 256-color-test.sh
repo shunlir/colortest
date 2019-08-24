@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# This file was originally taken from https://gitlab.gnome.org/GNOME/vte/raw/vte-0-58/perf/256test.sh
 
 sep=':'
 if [ "$1" = "-colon" -o "$1" = "-official" -o "$1" = "-dejure" ]; then
@@ -64,13 +66,8 @@ somecolors() {
   done
 }
 
-allcolors() {
-  echo "-- 8 standard colors: SGR ${1}0..${1}7 --"
-  somecolors 0 7 "$1"
-  echo
-  echo "-- 8 bright colors: SGR ${2}0..${2}7 --"
-  somecolors 0 7 "$2"
-  echo
+256colors()
+{
   echo "-- 256 colors: SGR ${1}8${sep}5${sep}0..255 --"
   somecolors 0 15 "${1}8${sep}5${sep}"
   echo
@@ -82,6 +79,20 @@ allcolors() {
   somecolors 196 231 "${1}8${sep}5${sep}"
   echo
   somecolors 232 255 "${1}8${sep}5${sep}"
+}
+
+allcolors() {
+  echo "-- 8 standard colors: SGR ${1}0..${1}7 --"
+  somecolors 0 7 "$1"
+  echo
+  echo "-- 8 bright colors: SGR ${2}0..${2}7 --"
+  somecolors 0 7 "$2"
+  echo
+  sep=';'
+  256colors $1
+  echo
+  sep=':'
+  256colors $1
 }
 
 allcolors 3 9
