@@ -20,18 +20,21 @@
 # This file was originally taken from https://gitlab.gnome.org/GNOME/vte/raw/vte-0-58/perf/256test.sh
 
 sep=':'
+short=
 if [ "$1" = "-colon" -o "$1" = "-official" -o "$1" = "-dejure" ]; then
   shift
 elif [ "$1" = "-semicolon" -o "$1" = "-common" -o "$1" = "-defacto" ]; then
   sep=';'
+  shift
+elif [ "$1" = "-16" ]; then
+  short="y"
   shift
 fi
 
 if [ $# != 0 ]; then
   echo 'Usage: 256test.sh [-format]' >&2
   echo >&2
-  echo '  -colon|-official|-dejure:     Official format (default)  \e[38:5:INDEXm' >&2
-  echo '  -semicolon|-common|-defacto:  Commonly used format       \e[38;5;INDEXm' >&2
+  echo '  -16:                          16 colors test             \e[38;5;INDEXm' >&2
   exit 1
 fi
 
@@ -70,15 +73,17 @@ somecolors() {
 {
   echo "-- 256 colors: SGR ${1}8${sep}5${sep}0..255 --"
   somecolors 0 15 "${1}8${sep}5${sep}"
-  echo
-  somecolors  16  51 "${1}8${sep}5${sep}"
-  somecolors  52  87 "${1}8${sep}5${sep}"
-  somecolors  88 123 "${1}8${sep}5${sep}"
-  somecolors 124 159 "${1}8${sep}5${sep}"
-  somecolors 160 195 "${1}8${sep}5${sep}"
-  somecolors 196 231 "${1}8${sep}5${sep}"
-  echo
-  somecolors 232 255 "${1}8${sep}5${sep}"
+  if [ "$short" != "y" ]; then
+    echo
+    somecolors  16  51 "${1}8${sep}5${sep}"
+    somecolors  52  87 "${1}8${sep}5${sep}"
+    somecolors  88 123 "${1}8${sep}5${sep}"
+    somecolors 124 159 "${1}8${sep}5${sep}"
+    somecolors 160 195 "${1}8${sep}5${sep}"
+    somecolors 196 231 "${1}8${sep}5${sep}"
+    echo
+    somecolors 232 255 "${1}8${sep}5${sep}"
+  fi
 }
 
 allcolors() {
