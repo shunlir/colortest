@@ -22,7 +22,8 @@
 sep=':'
 
 format_number() {
-  local c=$'\u254F'
+  # see https://www.compart.com/en/unicode/block/U+2500
+  local c=$'\u2502'
   if [ $1 -lt 10 ]; then
     printf "$c %d" $1
   else
